@@ -21,12 +21,13 @@ export const OptimizedImage: React.FC<Props> = ({
   height,
   ...rest
 }) => {
-  // Simple WebP variant if CDN supports query params; otherwise falls back to src.
-  const webp = src.includes("?") ? `${src}&format=webp` : `${src}?format=webp`;
+  // Avoid generating a WebP variant for data/blobs, which are already inline URLs.
+  const isInlineUrl = src.startsWith("data:") || src.startsWith("blob:");
+  const webp = isInlineUrl ? undefined : src.includes("?") ? `${src}&format=webp` : `${src}?format=webp`;
 
   return (
     <picture>
-      <source srcSet={webp} type="image/webp" />
+      {webp && <source srcSet={webp} type="image/webp" />}
       <img
         loading="lazy"
         decoding="async"
