@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ||
-  "http://127.0.0.1:3000/api/v1";
+  "https://backend-cleanlink-j5ux.onrender.com/api/v1";
 
 let authToken: string | null = null;
 
